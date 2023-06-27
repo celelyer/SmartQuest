@@ -11,19 +11,20 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     var enemyHPLabel: SKLabelNode? = nil
     
-    //各種数値格納庫
+    //各種サイズ格納変数
     var topSize = CGSize(width: 0, height: 0)       //天井のサイズ
     var wallSize = CGSize(width: 0, height: 0)      //壁のサイズ
     var floorSize = CGSize(width: 0, height: 0)     //床のサイズ
     var cueSize = CGSize(width: 0, height: 0)       //キューのサイズ
     var notchHeight: CGFloat = 0.0                  //ノッチ部分の高さを格納する変数
+    var stageSize = CGSize(width: 0, height: 0)     //ステージのサイズ
     
     //発射地点のノード
     var launchNode: SKFieldNode!
     
     //各種パラメーター格納用変数
     
-    var enemyHP: UInt32 = 10
+    var enemyHP: UInt32 = 1
     
     var sizeDefault_Caracter = CGSize(width: 0, height: 0)  //キャラクターの基本サイズ
     var frictionDefault_Caracter = 0.1                      //摩擦係数
@@ -79,16 +80,18 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 notchHeight = statusBarFrame.size.height
             }
         }
+        //ステージのサイズを取得する
+        stageSize = CGSize(width: self.size.width, height: self.size.height)
         
         //発射地点に重力を発生させるノード
         launchNode = SKFieldNode.linearGravityField(withVector: vector_float3(x: 1, y: 0, z: 0))
         launchNode.strength = gravityStrength / 2
-        launchNode.position = CGPoint(x: self.size.width - sizeDefault_Caracter.width / 2, y: sizeDefault_Caracter.height / 2)
+        launchNode.position = CGPoint(x: stageSize.width - sizeDefault_Caracter.width / 2, y: sizeDefault_Caracter.height / 2)
         launchNode.physicsBody?.categoryBitMask = CategoryBitMask.launch
         addChild(launchNode)
         
         //各キャラの共通設定
-        sizeDefault_Caracter = CGSize(width: self.size.width / 15, height: self.size.width / 15)   //サイズ
+        sizeDefault_Caracter = CGSize(width: stageSize.width / 15, height: stageSize.width / 15)   //サイズ
         birthPosition = CGPoint(x: sizeDefault_Caracter.width * 1.1, y: SKTexture(imageNamed: "floor").size().height / 2)
 
         //背景を黄緑一色にする
@@ -126,32 +129,32 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let floor = SKSpriteNode(texture: floorTexture)
         let floorBottom = SKSpriteNode(texture: floorTexture)
         
-        wallRight.size = CGSize(width: wallRight.size.width, height: self.size.height * 1.1)
+        wallRight.size = CGSize(width: wallRight.size.width, height: stageSize.height * 1.1)
         wallRight.physicsBody = SKPhysicsBody(rectangleOf: wallRight.size)
         wallRight.physicsBody?.categoryBitMask = CategoryBitMask.wall
         wallRight.physicsBody?.restitution = restitution_Wall
         wallRight.physicsBody?.friction = friction_wall
-        wallRight.position = CGPoint(x: self.size.width, y: self.size.height / 2)
+        wallRight.position = CGPoint(x: stageSize.width, y: stageSize.height / 2)
         wallRight.physicsBody?.isDynamic = false
         
         wallSize = wallRight.size   //壁のサイズを登録
         
-        wallLeft.size = CGSize(width: wallLeft.size.width, height: self.size.height * 1.1)
+        wallLeft.size = CGSize(width: wallLeft.size.width, height: stageSize.height * 1.1)
         wallLeft.physicsBody = SKPhysicsBody(rectangleOf: wallLeft.size)
         wallLeft.physicsBody?.categoryBitMask = CategoryBitMask.wall
         wallLeft.physicsBody?.restitution = restitution_Wall
         wallLeft.physicsBody?.friction = friction_wall
-        wallLeft.position = CGPoint(x: 0, y: self.size.height / 2)
+        wallLeft.position = CGPoint(x: 0, y: stageSize.height / 2)
         wallLeft.physicsBody?.isDynamic = false
         
-        top.size = CGSize(width: self.size.width, height: top.size.height * self.size.width / top.size.width)
+        top.size = CGSize(width: stageSize.width, height: top.size.height * stageSize.width / top.size.width)
         top.physicsBody = SKPhysicsBody(texture: SKTexture(imageNamed: "top"), size: CGSize(width: top.size.width, height: top.size.height))
         top.physicsBody?.categoryBitMask = CategoryBitMask.wall
         top.physicsBody?.isDynamic = false
         top.physicsBody?.friction = 0
         top.physicsBody?.restitution = restitution_Wall
         top.physicsBody?.friction = friction_wall
-        top.position = CGPoint(x: self.size.width / 2, y: self.size.height - top.size.height / 2 - notchHeight)
+        top.position = CGPoint(x: stageSize.width / 2, y: stageSize.height - top.size.height / 2 - notchHeight)
         
         topSize = top.size  //天井のサイズを登録
         
@@ -168,20 +171,20 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         floorSize = floorBottom.size    //床のサイズを登録
         
-        wallLail.size = CGSize(width: wallLail.size.width / 2, height: self.size.height - (top.size.height + notchHeight + sizeDefault_Caracter.height * 1.01))
+        wallLail.size = CGSize(width: wallLail.size.width / 2, height: stageSize.height - (top.size.height + notchHeight + sizeDefault_Caracter.height * 1.01))
         wallLail.physicsBody = SKPhysicsBody(rectangleOf: wallLail.size)
         wallLail.physicsBody?.categoryBitMask = CategoryBitMask.wall
         wallLail.physicsBody?.restitution = restitution_Wall
         //発射レール壁の位置は下と右にボールの通り道ができるように配置
-        wallLail.position = CGPoint(x: self.size.width - sizeDefault_Caracter.width * 1.2 - wallRight.size.width / 2, y: wallLail.size.height / 2 + sizeDefault_Caracter.height * 1.1 + floorBottom.size.height / 2)
+        wallLail.position = CGPoint(x: stageSize.width - sizeDefault_Caracter.width * 1.2 - wallRight.size.width / 2, y: wallLail.size.height / 2 + sizeDefault_Caracter.height * 1.1 + floorBottom.size.height / 2)
         wallLail.physicsBody?.isDynamic = false
         
         //ステージ下の落下判定床
-        floor.size = CGSize(width: self.size.width, height: floor.size.height / 5)
+        floor.size = CGSize(width: stageSize.width, height: floor.size.height / 5)
         floor.physicsBody = SKPhysicsBody(rectangleOf: floor.size)
         floor.physicsBody?.categoryBitMask = CategoryBitMask.floor
         floor.physicsBody?.isDynamic = false
-        floor.position = CGPoint(x: self.size.width / 2 - (self.size.width - wallLail.position.x), y: wallLail.position.y - wallLail.size.height / 2 + floor.size.height / 2)
+        floor.position = CGPoint(x: stageSize.width / 2 - (stageSize.width - wallLail.position.x), y: wallLail.position.y - wallLail.size.height / 2 + floor.size.height / 2)
         floor.name = "落下判定"
         
         //ゲートの設置
@@ -201,7 +204,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         //キューの設置
         let cueTexture = SKTexture(imageNamed: "que")
         cueTexture.filteringMode = SKTextureFilteringMode.linear
-        cue = SKSpriteNode(texture: cueTexture, size: CGSize(width: sizeDefault_Caracter.width * 0.8, height: self.size.height / 2))
+        cue = SKSpriteNode(texture: cueTexture, size: CGSize(width: sizeDefault_Caracter.width * 0.8, height: stageSize.height / 2))
         
         cue.physicsBody = SKPhysicsBody(texture: cueTexture, size: cue.size)
         cue.physicsBody?.isDynamic = true
@@ -212,7 +215,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         cue.physicsBody?.allowsRotation = false
         cue.physicsBody?.categoryBitMask = CategoryBitMask.wall
         cue.physicsBody?.collisionBitMask = CategoryBitMask.character | CategoryBitMask.wall
-        cue.position = CGPoint(x: self.size.width - wallRight.size.width / 2 - sizeDefault_Caracter.width / 2, y: -cue.size.height / 3)
+        cue.position = CGPoint(x: stageSize.width - wallRight.size.width / 2 - sizeDefault_Caracter.width / 2, y: -cue.size.height / 3)
         cue.name = "キュー"
         
         
@@ -257,11 +260,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         //各ピンの座標リスト上からpin1,pin2...
         let pinPositions: [CGPoint] = [
-            CGPoint(x: sizeDefault_Caracter.width / 2 + wallSize.width / 2, y: self.size.height - notchHeight - topSize.height),
-            CGPoint(x: wallSize.width * 1.1 , y: self.size.height - notchHeight - topSize.height + sizeDefault_Caracter.height / 2),
-            CGPoint(x: self.size.width * Double.random(in: 0.25..<0.75), y: self.size.height * Double.random(in: 0.3..<0.8)),
-            CGPoint(x: self.size.width * Double.random(in: 0.25..<0.75), y: self.size.height * Double.random(in: 0.3..<0.8)),
-            CGPoint(x: self.size.width * Double.random(in: 0.25..<0.75), y: self.size.height * Double.random(in: 0.3..<0.8))
+            CGPoint(x: sizeDefault_Caracter.width / 2 + wallSize.width / 2, y: stageSize.height - notchHeight - topSize.height),
+            CGPoint(x: wallSize.width * 1.1 , y: stageSize.height - notchHeight - topSize.height + sizeDefault_Caracter.height / 2),
+            CGPoint(x: stageSize.width * Double.random(in: 0.25..<0.75), y: stageSize.height * Double.random(in: 0.3..<0.8)),
+            CGPoint(x: stageSize.width * Double.random(in: 0.25..<0.75), y: stageSize.height * Double.random(in: 0.3..<0.8)),
+            CGPoint(x: stageSize.width * Double.random(in: 0.25..<0.75), y: stageSize.height * Double.random(in: 0.3..<0.8))
         ]
         
         let pinCount = 5    //生成するピンの個数
@@ -367,10 +370,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         enemy.physicsBody?.collisionBitMask = CategoryBitMask.character
         enemy.physicsBody?.friction = friction_enemy
         enemy.physicsBody?.restitution = restitution_enemy
-        enemy.position = CGPoint(x: self.size.width / 2, y: self.size.height / 4)
+        enemy.position = CGPoint(x: stageSize.width / 2, y: stageSize.height / 4)
         enemy.name = "敵"
         
-        enemyHP = 10
         enemyHPLabel = SKLabelNode(text: "HP:\(enemyHP)")
         enemyHPLabel!.fontColor = UIColor.black
         enemyHPLabel!.position = CGPoint(x: enemy.position.x, y: enemy.position.y - enemy.size.height / 2)
@@ -386,8 +388,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         //各ダメージ判定のサイズリスト
         let damageSizes: [CGSize] = [
-            CGSize(width: wallSize.width / 5, height: self.size.height / 10),
-            CGSize(width: wallSize.width / 5, height: self.size.height / 10),
+            CGSize(width: wallSize.width / 5, height: stageSize.height / 10),
+            CGSize(width: wallSize.width / 5, height: stageSize.height / 10),
             CGSize(width: wallSize.width, height: wallSize.width),
             CGSize(width: wallSize.width, height: wallSize.width),
             CGSize(width: wallSize.width, height: wallSize.width)
@@ -395,11 +397,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         //各ダメージ判定の座標リスト
         let damagePositions: [CGPoint] = [
-            CGPoint(x: wallSize.width / 2, y: self.size.height  /   2),
-            CGPoint(x: self.size.width - wallSize.width - sizeDefault_Caracter.width * 1.1, y: self.size.height / 2),
-            CGPoint(x: self.size.width * Double.random(in: 0.2..<0.6), y: self.size.height * Double.random(in: 0.4..<0.6)),
-            CGPoint(x: self.size.width * Double.random(in: 0.2..<0.6), y: self.size.height * Double.random(in: 0.4..<0.6)),
-            CGPoint(x: self.size.width * Double.random(in: 0.2..<0.6), y: self.size.height * Double.random(in: 0.4..<0.6))
+            CGPoint(x: wallSize.width / 2, y: stageSize.height  /   2),
+            CGPoint(x: stageSize.width - wallSize.width - sizeDefault_Caracter.width * 1.1, y: stageSize.height / 2),
+            CGPoint(x: stageSize.width * Double.random(in: 0.2..<0.6), y: stageSize.height * Double.random(in: 0.4..<0.6)),
+            CGPoint(x: stageSize.width * Double.random(in: 0.2..<0.6), y: stageSize.height * Double.random(in: 0.4..<0.6)),
+            CGPoint(x: stageSize.width * Double.random(in: 0.2..<0.6), y: stageSize.height * Double.random(in: 0.4..<0.6))
         ]
         
         
@@ -476,6 +478,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         var characterNode: SKNode
         var partnerNode: SKNode
         
+        //接触後に接触したどちらか、もしくは両方のノードが存在しなかった場合didendContactを抜ける
+        if nodeA == nil || nodeB == nil {
+            return
+        }
         //キャラクターが他のノードと衝突した場合の処理
         if nodeA?.physicsBody?.categoryBitMask == CategoryBitMask.character || nodeB?.physicsBody?.categoryBitMask == CategoryBitMask.character {
             //キャラクター側と衝突先側それぞれに名前をつける
@@ -543,7 +549,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             // タッチの位置を取得
             let touchLocation = touch.location(in: self)
 
-            if touchLocation.x < self.size.width / 5 && touchLocation.y > self.size.height * 0.9 {
+            if touchLocation.x < stageSize.width / 5 && touchLocation.y > stageSize.height * 0.9 {
                 reset()
             }
         }
