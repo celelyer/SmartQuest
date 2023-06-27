@@ -1,0 +1,607 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		A5D199732A407D7C00227F21 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5D199722A407D7C00227F21 /* AppDelegate.swift */; };
+		A5D199772A407D7C00227F21 /* Actions.sks in Resources */ = {isa = PBXBuildFile; fileRef = A5D199762A407D7C00227F21 /* Actions.sks */; };
+		A5D199792A407D7C00227F21 /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5D199782A407D7C00227F21 /* GameScene.swift */; };
+		A5D1997B2A407D7C00227F21 /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5D1997A2A407D7C00227F21 /* GameViewController.swift */; };
+		A5D1997E2A407D7C00227F21 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A5D1997C2A407D7C00227F21 /* Main.storyboard */; };
+		A5D199802A407D7F00227F21 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A5D1997F2A407D7F00227F21 /* Assets.xcassets */; };
+		A5D199832A407D7F00227F21 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A5D199812A407D7F00227F21 /* LaunchScreen.storyboard */; };
+		A5D1998D2A407D8000227F21 /* SmartQuestTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5D1998C2A407D8000227F21 /* SmartQuestTests.swift */; };
+		A5D199972A407D8000227F21 /* SmartQuestUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5D199962A407D8000227F21 /* SmartQuestUITests.swift */; };
+		A5D199992A407D8000227F21 /* SmartQuestUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5D199982A407D8000227F21 /* SmartQuestUITestsLaunchTests.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		A5D199892A407D8000227F21 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A5D199672A407D7C00227F21 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = A5D1996E2A407D7C00227F21;
+			remoteInfo = SmartQuest;
+		};
+		A5D199932A407D8000227F21 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A5D199672A407D7C00227F21 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = A5D1996E2A407D7C00227F21;
+			remoteInfo = SmartQuest;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		A5D1996F2A407D7C00227F21 /* SmartQuest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SmartQuest.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		A5D199722A407D7C00227F21 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		A5D199762A407D7C00227F21 /* Actions.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Actions.sks; sourceTree = "<group>"; };
+		A5D199782A407D7C00227F21 /* GameScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
+		A5D1997A2A407D7C00227F21 /* GameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
+		A5D1997D2A407D7C00227F21 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		A5D1997F2A407D7F00227F21 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		A5D199822A407D7F00227F21 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		A5D199882A407D8000227F21 /* SmartQuestTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SmartQuestTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		A5D1998C2A407D8000227F21 /* SmartQuestTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmartQuestTests.swift; sourceTree = "<group>"; };
+		A5D199922A407D8000227F21 /* SmartQuestUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SmartQuestUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		A5D199962A407D8000227F21 /* SmartQuestUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmartQuestUITests.swift; sourceTree = "<group>"; };
+		A5D199982A407D8000227F21 /* SmartQuestUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmartQuestUITestsLaunchTests.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		A5D1996C2A407D7C00227F21 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A5D199852A407D8000227F21 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A5D1998F2A407D8000227F21 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		A5D199662A407D7C00227F21 = {
+			isa = PBXGroup;
+			children = (
+				A5D199712A407D7C00227F21 /* SmartQuest */,
+				A5D1998B2A407D8000227F21 /* SmartQuestTests */,
+				A5D199952A407D8000227F21 /* SmartQuestUITests */,
+				A5D199702A407D7C00227F21 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		A5D199702A407D7C00227F21 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				A5D1996F2A407D7C00227F21 /* SmartQuest.app */,
+				A5D199882A407D8000227F21 /* SmartQuestTests.xctest */,
+				A5D199922A407D8000227F21 /* SmartQuestUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		A5D199712A407D7C00227F21 /* SmartQuest */ = {
+			isa = PBXGroup;
+			children = (
+				A5D199722A407D7C00227F21 /* AppDelegate.swift */,
+				A5D199762A407D7C00227F21 /* Actions.sks */,
+				A5D199782A407D7C00227F21 /* GameScene.swift */,
+				A5D1997A2A407D7C00227F21 /* GameViewController.swift */,
+				A5D1997C2A407D7C00227F21 /* Main.storyboard */,
+				A5D1997F2A407D7F00227F21 /* Assets.xcassets */,
+				A5D199812A407D7F00227F21 /* LaunchScreen.storyboard */,
+			);
+			path = SmartQuest;
+			sourceTree = "<group>";
+		};
+		A5D1998B2A407D8000227F21 /* SmartQuestTests */ = {
+			isa = PBXGroup;
+			children = (
+				A5D1998C2A407D8000227F21 /* SmartQuestTests.swift */,
+			);
+			path = SmartQuestTests;
+			sourceTree = "<group>";
+		};
+		A5D199952A407D8000227F21 /* SmartQuestUITests */ = {
+			isa = PBXGroup;
+			children = (
+				A5D199962A407D8000227F21 /* SmartQuestUITests.swift */,
+				A5D199982A407D8000227F21 /* SmartQuestUITestsLaunchTests.swift */,
+			);
+			path = SmartQuestUITests;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		A5D1996E2A407D7C00227F21 /* SmartQuest */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A5D1999C2A407D8000227F21 /* Build configuration list for PBXNativeTarget "SmartQuest" */;
+			buildPhases = (
+				A5D1996B2A407D7C00227F21 /* Sources */,
+				A5D1996C2A407D7C00227F21 /* Frameworks */,
+				A5D1996D2A407D7C00227F21 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = SmartQuest;
+			productName = SmartQuest;
+			productReference = A5D1996F2A407D7C00227F21 /* SmartQuest.app */;
+			productType = "com.apple.product-type.application";
+		};
+		A5D199872A407D8000227F21 /* SmartQuestTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A5D1999F2A407D8000227F21 /* Build configuration list for PBXNativeTarget "SmartQuestTests" */;
+			buildPhases = (
+				A5D199842A407D8000227F21 /* Sources */,
+				A5D199852A407D8000227F21 /* Frameworks */,
+				A5D199862A407D8000227F21 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				A5D1998A2A407D8000227F21 /* PBXTargetDependency */,
+			);
+			name = SmartQuestTests;
+			productName = SmartQuestTests;
+			productReference = A5D199882A407D8000227F21 /* SmartQuestTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		A5D199912A407D8000227F21 /* SmartQuestUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A5D199A22A407D8000227F21 /* Build configuration list for PBXNativeTarget "SmartQuestUITests" */;
+			buildPhases = (
+				A5D1998E2A407D8000227F21 /* Sources */,
+				A5D1998F2A407D8000227F21 /* Frameworks */,
+				A5D199902A407D8000227F21 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				A5D199942A407D8000227F21 /* PBXTargetDependency */,
+			);
+			name = SmartQuestUITests;
+			productName = SmartQuestUITests;
+			productReference = A5D199922A407D8000227F21 /* SmartQuestUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		A5D199672A407D7C00227F21 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1420;
+				LastUpgradeCheck = 1420;
+				TargetAttributes = {
+					A5D1996E2A407D7C00227F21 = {
+						CreatedOnToolsVersion = 14.2;
+					};
+					A5D199872A407D8000227F21 = {
+						CreatedOnToolsVersion = 14.2;
+						TestTargetID = A5D1996E2A407D7C00227F21;
+					};
+					A5D199912A407D8000227F21 = {
+						CreatedOnToolsVersion = 14.2;
+						TestTargetID = A5D1996E2A407D7C00227F21;
+					};
+				};
+			};
+			buildConfigurationList = A5D1996A2A407D7C00227F21 /* Build configuration list for PBXProject "SmartQuest" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = A5D199662A407D7C00227F21;
+			productRefGroup = A5D199702A407D7C00227F21 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				A5D1996E2A407D7C00227F21 /* SmartQuest */,
+				A5D199872A407D8000227F21 /* SmartQuestTests */,
+				A5D199912A407D8000227F21 /* SmartQuestUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		A5D1996D2A407D7C00227F21 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A5D1997E2A407D7C00227F21 /* Main.storyboard in Resources */,
+				A5D199802A407D7F00227F21 /* Assets.xcassets in Resources */,
+				A5D199832A407D7F00227F21 /* LaunchScreen.storyboard in Resources */,
+				A5D199772A407D7C00227F21 /* Actions.sks in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A5D199862A407D8000227F21 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A5D199902A407D8000227F21 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		A5D1996B2A407D7C00227F21 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A5D199792A407D7C00227F21 /* GameScene.swift in Sources */,
+				A5D1997B2A407D7C00227F21 /* GameViewController.swift in Sources */,
+				A5D199732A407D7C00227F21 /* AppDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A5D199842A407D8000227F21 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A5D1998D2A407D8000227F21 /* SmartQuestTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A5D1998E2A407D8000227F21 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A5D199972A407D8000227F21 /* SmartQuestUITests.swift in Sources */,
+				A5D199992A407D8000227F21 /* SmartQuestUITestsLaunchTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		A5D1998A2A407D8000227F21 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = A5D1996E2A407D7C00227F21 /* SmartQuest */;
+			targetProxy = A5D199892A407D8000227F21 /* PBXContainerItemProxy */;
+		};
+		A5D199942A407D8000227F21 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = A5D1996E2A407D7C00227F21 /* SmartQuest */;
+			targetProxy = A5D199932A407D8000227F21 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		A5D1997C2A407D7C00227F21 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				A5D1997D2A407D7C00227F21 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		A5D199812A407D7F00227F21 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				A5D199822A407D7F00227F21 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		A5D1999A2A407D8000227F21 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		A5D1999B2A407D8000227F21 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		A5D1999D2A407D8000227F21 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = HBH985T6GB;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UIMainStoryboardFile = Main;
+				INFOPLIST_KEY_UIStatusBarHidden = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = jp.celelyer.SmartQuest;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		A5D1999E2A407D8000227F21 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = HBH985T6GB;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UIMainStoryboardFile = Main;
+				INFOPLIST_KEY_UIStatusBarHidden = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = jp.celelyer.SmartQuest;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		A5D199A02A407D8000227F21 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = HBH985T6GB;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = jp.celelyer.SmartQuestTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SmartQuest.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/SmartQuest";
+			};
+			name = Debug;
+		};
+		A5D199A12A407D8000227F21 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = HBH985T6GB;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = jp.celelyer.SmartQuestTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SmartQuest.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/SmartQuest";
+			};
+			name = Release;
+		};
+		A5D199A32A407D8000227F21 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = HBH985T6GB;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = jp.celelyer.SmartQuestUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = SmartQuest;
+			};
+			name = Debug;
+		};
+		A5D199A42A407D8000227F21 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = HBH985T6GB;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = jp.celelyer.SmartQuestUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = SmartQuest;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		A5D1996A2A407D7C00227F21 /* Build configuration list for PBXProject "SmartQuest" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A5D1999A2A407D8000227F21 /* Debug */,
+				A5D1999B2A407D8000227F21 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		A5D1999C2A407D8000227F21 /* Build configuration list for PBXNativeTarget "SmartQuest" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A5D1999D2A407D8000227F21 /* Debug */,
+				A5D1999E2A407D8000227F21 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		A5D1999F2A407D8000227F21 /* Build configuration list for PBXNativeTarget "SmartQuestTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A5D199A02A407D8000227F21 /* Debug */,
+				A5D199A12A407D8000227F21 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		A5D199A22A407D8000227F21 /* Build configuration list for PBXNativeTarget "SmartQuestUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A5D199A32A407D8000227F21 /* Debug */,
+				A5D199A42A407D8000227F21 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = A5D199672A407D7C00227F21 /* Project object */;
+}
