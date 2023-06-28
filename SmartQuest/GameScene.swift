@@ -10,6 +10,10 @@ import SpriteKit
 class GameScene: SKScene, SKPhysicsContactDelegate {
     
     var enemyHPLabel: SKLabelNode? = nil
+    var warriorHPLabel: SKLabelNode? = nil
+    var knightHPLabel: SKLabelNode? = nil
+    var priestHPLabel: SKLabelNode? = nil
+    var mageHPLabel: SKLabelNode? = nil
     
     //各種サイズ格納変数
     var topSize = CGSize(width: 0, height: 0)       //天井のサイズ
@@ -18,13 +22,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var cueSize = CGSize(width: 0, height: 0)       //キューのサイズ
     var notchHeight: CGFloat = 0.0                  //ノッチ部分の高さを格納する変数
     var stageSize = CGSize(width: 0, height: 0)     //ステージのサイズ
+    var statusSize = CGSize(width: 0, height: 0)    //ステータス画面のサイズ
+    var stagePositionZero = CGPoint(x: 0, y: 0)     //ステージの原点座標
     
     //発射地点のノード
     var launchNode: SKFieldNode!
     
     //各種パラメーター格納用変数
-    
-    var enemyHP: UInt32 = 1
     
     var sizeDefault_Caracter = CGSize(width: 0, height: 0)  //キャラクターの基本サイズ
     var frictionDefault_Caracter = 0.1                      //摩擦係数
@@ -68,8 +72,37 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     let pinTexture = SKTexture(imageNamed: "pin")
     
     
-
+    //各キャラクターのステータス
+    //戦士
+    var HP_warrior: Int32 = 100
+    let HP_warrior_default: Int32 = 100
+    var ATK_warrior: Int32 = 30
     
+    //剣士
+    var HP_knight: Int32 = 80
+    let HP_knight_default: Int32 = 80
+    var ATK_knight: Int32 = 50
+    
+    //魔法使い
+    var HP_mage: Int32 = 50
+    let HP_mage_default: Int32 = 50
+    var ATK_mage: Int32 = 20
+    
+    //僧侶
+    var HP_priest: Int32 = 60
+    let HP_priest_default: Int32 = 60
+    var ATK_priest: Int32 = 10
+    
+    //敵
+    var HP_enemy: Int32 = 300
+    let HP_enemy_default: Int32 = 300
+    var ATK_enemy: Int32 = 30
+    
+    //ダメージ判定
+    var ATK_damage: Int32 = 10
+
+    //死亡判定
+    var death: Int32 = 1
     
     
     override func didMove(to view: SKView) {
@@ -80,19 +113,24 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 notchHeight = statusBarFrame.size.height
             }
         }
+        
+        //ステータス画面のスペースを確保する
+        statusSize = CGSize(width: self.size.width, height: self.size.height / 10)
         //ステージのサイズを取得する
-        stageSize = CGSize(width: self.size.width, height: self.size.height)
+        stageSize = CGSize(width: self.size.width, height: self.size.height - statusSize.height)
+        //ステージの原点座標を設定
+        stagePositionZero = CGPoint(x: 0, y: statusSize.height)
         
         //発射地点に重力を発生させるノード
         launchNode = SKFieldNode.linearGravityField(withVector: vector_float3(x: 1, y: 0, z: 0))
         launchNode.strength = gravityStrength / 2
-        launchNode.position = CGPoint(x: stageSize.width - sizeDefault_Caracter.width / 2, y: sizeDefault_Caracter.height / 2)
+        launchNode.position = CGPoint(x: stageSize.width - sizeDefault_Caracter.width / 2, y: sizeDefault_Caracter.height / 2 + stagePositionZero.y)
         launchNode.physicsBody?.categoryBitMask = CategoryBitMask.launch
         addChild(launchNode)
         
         //各キャラの共通設定
         sizeDefault_Caracter = CGSize(width: stageSize.width / 15, height: stageSize.width / 15)   //サイズ
-        birthPosition = CGPoint(x: sizeDefault_Caracter.width * 1.1, y: SKTexture(imageNamed: "floor").size().height / 2)
+        birthPosition = CGPoint(x: sizeDefault_Caracter.width * 1.1, y: SKTexture(imageNamed: "floor").size().height / 2 + stagePositionZero.y)
 
         //背景を黄緑一色にする
         let yellowGreenColor = UIColor(red: 0.68, green: 0.89, blue: 0.38, alpha: 1.0)
@@ -108,7 +146,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         setPin()
         setEnemy()
         setDamage()
-        
+        setStatus()
         
     }
     
@@ -154,7 +192,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         top.physicsBody?.friction = 0
         top.physicsBody?.restitution = restitution_Wall
         top.physicsBody?.friction = friction_wall
-        top.position = CGPoint(x: stageSize.width / 2, y: stageSize.height - top.size.height / 2 - notchHeight)
+        top.position = CGPoint(x: stageSize.width / 2, y: stageSize.height - top.size.height / 2 - notchHeight + stagePositionZero.y)
         
         topSize = top.size  //天井のサイズを登録
         
@@ -166,7 +204,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         floorBottom.physicsBody?.isDynamic = false
         floorBottom.physicsBody?.restitution = restitution_Wall
         floorBottom.physicsBody?.friction = friction_wall
-        floorBottom.position = CGPoint(x: floorBottom.size.width / 2, y: 0)
+        floorBottom.position = CGPoint(x: floorBottom.size.width / 2, y:  stagePositionZero.y)
         floorBottom.name = "床"
         
         floorSize = floorBottom.size    //床のサイズを登録
@@ -176,7 +214,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         wallLail.physicsBody?.categoryBitMask = CategoryBitMask.wall
         wallLail.physicsBody?.restitution = restitution_Wall
         //発射レール壁の位置は下と右にボールの通り道ができるように配置
-        wallLail.position = CGPoint(x: stageSize.width - sizeDefault_Caracter.width * 1.2 - wallRight.size.width / 2, y: wallLail.size.height / 2 + sizeDefault_Caracter.height * 1.1 + floorBottom.size.height / 2)
+        wallLail.position = CGPoint(x: stageSize.width - sizeDefault_Caracter.width * 1.2 - wallRight.size.width / 2, y: wallLail.size.height / 2 + sizeDefault_Caracter.height * 1.1 + floorBottom.size.height / 2 + stagePositionZero.y)
         wallLail.physicsBody?.isDynamic = false
         
         //ステージ下の落下判定床
@@ -215,7 +253,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         cue.physicsBody?.allowsRotation = false
         cue.physicsBody?.categoryBitMask = CategoryBitMask.wall
         cue.physicsBody?.collisionBitMask = CategoryBitMask.character | CategoryBitMask.wall
-        cue.position = CGPoint(x: stageSize.width - wallRight.size.width / 2 - sizeDefault_Caracter.width / 2, y: -cue.size.height / 3)
+        cue.position = CGPoint(x: stageSize.width - wallRight.size.width / 2 - sizeDefault_Caracter.width / 2, y: -cue.size.height / 3 + stagePositionZero.y)
         cue.name = "キュー"
         
         
@@ -260,11 +298,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         //各ピンの座標リスト上からpin1,pin2...
         let pinPositions: [CGPoint] = [
-            CGPoint(x: sizeDefault_Caracter.width / 2 + wallSize.width / 2, y: stageSize.height - notchHeight - topSize.height),
-            CGPoint(x: wallSize.width * 1.1 , y: stageSize.height - notchHeight - topSize.height + sizeDefault_Caracter.height / 2),
-            CGPoint(x: stageSize.width * Double.random(in: 0.25..<0.75), y: stageSize.height * Double.random(in: 0.3..<0.8)),
-            CGPoint(x: stageSize.width * Double.random(in: 0.25..<0.75), y: stageSize.height * Double.random(in: 0.3..<0.8)),
-            CGPoint(x: stageSize.width * Double.random(in: 0.25..<0.75), y: stageSize.height * Double.random(in: 0.3..<0.8))
+            CGPoint(x: sizeDefault_Caracter.width / 2 + wallSize.width / 2, y: stageSize.height - notchHeight - topSize.height + stagePositionZero.y),
+            CGPoint(x: wallSize.width * 1.1 , y: stageSize.height - notchHeight - topSize.height + sizeDefault_Caracter.height / 2 + stagePositionZero.y),
+            CGPoint(x: stageSize.width * Double.random(in: 0.25..<0.75), y: stageSize.height * Double.random(in: 0.3..<0.8) + stagePositionZero.y),
+            CGPoint(x: stageSize.width * Double.random(in: 0.25..<0.75), y: stageSize.height * Double.random(in: 0.3..<0.8) + stagePositionZero.y),
+            CGPoint(x: stageSize.width * Double.random(in: 0.25..<0.75), y: stageSize.height * Double.random(in: 0.3..<0.8) + stagePositionZero.y)
         ]
         
         let pinCount = 5    //生成するピンの個数
@@ -315,6 +353,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         warrior.position = birthPosition
         warrior.name = "戦士"
         
+        HP_warrior = HP_warrior_default
+        
         //剣士
         knight.size = sizeDefault_Caracter
         knight.physicsBody = SKPhysicsBody(circleOfRadius: knight.size.width / 2.0)
@@ -326,6 +366,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         knight.physicsBody?.collisionBitMask = CategoryBitMask.character | CategoryBitMask.wall | CategoryBitMask.floor | CategoryBitMask.floorBottom | CategoryBitMask.cue
         knight.position = CGPoint(x: birthPosition.x + warrior.size.width, y: birthPosition.y)
         knight.name = "剣士"
+        
+        HP_knight = HP_knight_default
         
         //僧侶
         priest.size = sizeDefault_Caracter
@@ -339,6 +381,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         priest.position = CGPoint(x: birthPosition.x + warrior.size.width * 2, y: birthPosition.y)
         priest.name = "僧侶"
         
+        HP_priest = HP_priest_default
+        
         //魔法使い
         mage.size = sizeDefault_Caracter
         mage.physicsBody = SKPhysicsBody(circleOfRadius: mage.size.width / 2.0)
@@ -350,6 +394,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         mage.physicsBody?.collisionBitMask = CategoryBitMask.character | CategoryBitMask.wall | CategoryBitMask.floor | CategoryBitMask.floorBottom | CategoryBitMask.cue
         mage.position = CGPoint(x: birthPosition.x + warrior.size.width * 3, y: birthPosition.y)
         mage.name = "魔法使い"
+        
+        HP_mage = HP_mage_default
         
         addChild(warrior)
         addChild(knight)
@@ -370,10 +416,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         enemy.physicsBody?.collisionBitMask = CategoryBitMask.character
         enemy.physicsBody?.friction = friction_enemy
         enemy.physicsBody?.restitution = restitution_enemy
-        enemy.position = CGPoint(x: stageSize.width / 2, y: stageSize.height / 4)
+        enemy.position = CGPoint(x: stageSize.width / 2, y: stageSize.height / 4 + stagePositionZero.y)
         enemy.name = "敵"
         
-        enemyHPLabel = SKLabelNode(text: "HP:\(enemyHP)")
+        HP_enemy = HP_enemy_default
+        
+        enemyHPLabel = SKLabelNode(text: "HP:\(HP_enemy)")
         enemyHPLabel!.fontColor = UIColor.black
         enemyHPLabel!.position = CGPoint(x: enemy.position.x, y: enemy.position.y - enemy.size.height / 2)
         
@@ -397,11 +445,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         //各ダメージ判定の座標リスト
         let damagePositions: [CGPoint] = [
-            CGPoint(x: wallSize.width / 2, y: stageSize.height  /   2),
-            CGPoint(x: stageSize.width - wallSize.width - sizeDefault_Caracter.width * 1.1, y: stageSize.height / 2),
-            CGPoint(x: stageSize.width * Double.random(in: 0.2..<0.6), y: stageSize.height * Double.random(in: 0.4..<0.6)),
-            CGPoint(x: stageSize.width * Double.random(in: 0.2..<0.6), y: stageSize.height * Double.random(in: 0.4..<0.6)),
-            CGPoint(x: stageSize.width * Double.random(in: 0.2..<0.6), y: stageSize.height * Double.random(in: 0.4..<0.6))
+            CGPoint(x: wallSize.width / 2, y: stageSize.height  /   2 + stagePositionZero.y),
+            CGPoint(x: stageSize.width - wallSize.width - sizeDefault_Caracter.width * 1.1, y: stageSize.height / 2 + stagePositionZero.y),
+            CGPoint(x: stageSize.width * Double.random(in: 0.2..<0.6), y: stageSize.height * Double.random(in: 0.4..<0.6) + stagePositionZero.y),
+            CGPoint(x: stageSize.width * Double.random(in: 0.2..<0.6), y: stageSize.height * Double.random(in: 0.4..<0.6) + stagePositionZero.y),
+            CGPoint(x: stageSize.width * Double.random(in: 0.2..<0.6), y: stageSize.height * Double.random(in: 0.4..<0.6) + stagePositionZero.y)
         ]
         
         
@@ -423,6 +471,85 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             self.addChild(damage)
         }
         
+        
+    }
+    
+    //ステータスメニューの構成
+    func setStatus() {
+        let statusMenuSize = CGRect(x: 0, y: 0, width: statusSize.width - sizeDefault_Caracter.width * 1.5, height: statusSize.height)
+        let renderer = UIGraphicsImageRenderer(size: statusMenuSize.size)
+        let textureImage = renderer.image { context in
+            UIColor.black.setFill() // 長方形の塗りつぶし色を指定
+            context.fill(statusMenuSize) // 指定したフレーム内に長方形を描画
+        }
+        //テクスチャイメージをSKテクスチャに変換
+        let statusMenuTexture = SKTexture(image: textureImage)
+        var statusMenuNode = SKSpriteNode(texture: statusMenuTexture)
+        statusMenuNode.position = CGPoint(x: statusMenuNode.size.width / 2, y: statusMenuNode.size.height / 2)
+        
+        //キャラクターアイコンサイズ
+        let iconSize = CGSize(width: statusMenuNode.size.width / 4 * 0.8, height: statusMenuNode.size.width / 4 * 0.8)
+        let iconPosition = CGPoint(x: statusMenuNode.size.width / 4, y: statusMenuNode.size.height / 2)
+        
+        let warriorTexture = SKTexture(imageNamed: "warrior")
+        warriorTexture.filteringMode = SKTextureFilteringMode.nearest
+        let warrior = SKSpriteNode(texture: warriorTexture)
+        warrior.size = iconSize
+        warrior.position = CGPoint(x: iconPosition.x * 0.5, y: iconPosition.y)
+        let knightTexture = SKTexture(imageNamed: "knight")
+        knightTexture.filteringMode = SKTextureFilteringMode.nearest
+        let knight = SKSpriteNode(texture: knightTexture)
+        knight.size = iconSize
+        knight.position = CGPoint(x: iconPosition.x * 1.5, y: iconPosition.y)
+        let priestTexture = SKTexture(imageNamed: "priest")
+        priestTexture.filteringMode = SKTextureFilteringMode.nearest
+        let priest = SKSpriteNode(texture: priestTexture)
+        priest.size = iconSize
+        priest.position = CGPoint(x: iconPosition.x * 2.5, y: iconPosition.y)
+        let mageTexture = SKTexture(imageNamed: "mage")
+        mageTexture.filteringMode = SKTextureFilteringMode.nearest
+        let mage = SKSpriteNode(texture: mageTexture)
+        mage.size = iconSize
+        mage.position = CGPoint(x: iconPosition.x * 3.5, y: iconPosition.y)
+        
+        warriorHPLabel = SKLabelNode(text: "HP\n\(HP_warrior)")
+        warriorHPLabel?.numberOfLines = 2
+        warriorHPLabel!.fontColor = UIColor.orange
+        warriorHPLabel?.fontSize = warrior.size.width / 4
+        warriorHPLabel?.fontName = "Didot-Bold"
+        warriorHPLabel!.position = CGPoint(x: warrior.position.x, y: warrior.position.y - warrior.size.height / 2)
+        
+        knightHPLabel = SKLabelNode(text: "HP\n\(HP_knight)")
+        knightHPLabel?.numberOfLines = 2
+        knightHPLabel!.fontColor = UIColor.orange
+        knightHPLabel?.fontSize = knight.size.width / 4
+        knightHPLabel?.fontName = "Didot-Bold"
+        knightHPLabel!.position = CGPoint(x: knight.position.x, y: knight.position.y - knight.size.height / 2)
+        
+        priestHPLabel = SKLabelNode(text: "HP\n\(HP_priest)")
+        priestHPLabel?.numberOfLines = 2
+        priestHPLabel!.fontColor = UIColor.orange
+        priestHPLabel?.fontSize = priest.size.width / 4
+        priestHPLabel?.fontName = "Didot-Bold"
+        priestHPLabel!.position = CGPoint(x: priest.position.x, y: priest.position.y - priest.size.height / 2)
+        
+        mageHPLabel = SKLabelNode(text: "HP\n\(HP_mage)")
+        mageHPLabel?.numberOfLines = 2
+        mageHPLabel!.fontColor = UIColor.orange
+        mageHPLabel?.fontSize = mage.size.width / 4
+        mageHPLabel?.fontName = "Didot-Bold"
+        mageHPLabel!.position = CGPoint(x: mage.position.x, y: mage.position.y - mage.size.height / 2)
+        
+        self.addChild(statusMenuNode)
+        self.addChild(warrior)
+        self.addChild(knight)
+        self.addChild(mage)
+        self.addChild(priest)
+        
+        self.addChild(warriorHPLabel!)
+        self.addChild(knightHPLabel!)
+        self.addChild(priestHPLabel!)
+        self.addChild(mageHPLabel!)
         
     }
     
@@ -453,15 +580,69 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             
             //キャラクターがダメージに触れた時
             if partnerNode.name == "ダメージ" {
-                characterNode.removeFromParent()
+                if characterNode.name == "戦士" {
+                    HP_warrior -= ATK_damage
+                    death = HP_warrior
+                    if HP_warrior <= 0 {
+                        warriorHPLabel?.text = "HP\n0"
+                    }else{
+                        warriorHPLabel?.text = "HP\n\(HP_warrior)"
+                    }
+                }else if characterNode.name == "剣士" {
+                    HP_knight -= ATK_damage
+                    death = HP_knight
+                    if HP_knight <= 0 {
+                        knightHPLabel?.text = "HP\n0"
+                    }else{
+                        knightHPLabel?.text = "HP\n\(HP_knight)"
+                    }
+                }else if characterNode.name == "魔法使い" {
+                    HP_mage -= ATK_damage
+                    death = HP_mage
+                    if HP_mage <= 0 {
+                        mageHPLabel?.text = "HP\n0"
+                    }else{
+                        mageHPLabel?.text = "HP\n\(HP_mage)"
+                    }
+                }else if characterNode.name == "僧侶" {
+                    HP_priest -= ATK_damage
+                    death = HP_priest
+                    if HP_priest <= 0 {
+                        priestHPLabel?.text = "HP\n0"
+                    }else{
+                        priestHPLabel?.text = "HP\n\(HP_priest)"
+                    }
+                }
+                
+                print("\(String(describing: characterNode.name))HP = \(death)")
+                
+                if death <= 0 {
+                    characterNode.removeFromParent()
+                }
+                
+                death = 1
             }
             
             //キャラクターが敵に触れた時
             if partnerNode.name == "敵" {
-                enemyHP -= 1
-                enemyHPLabel?.text = "HP:\(enemyHP)"
-                print("残りHP＝\(enemyHP)")
-                if enemyHP == 0 {
+                
+                if characterNode.name == "戦士" {
+                    HP_enemy -= ATK_warrior
+                    death = HP_enemy
+                }else if characterNode.name == "剣士" {
+                    HP_enemy -= ATK_knight
+                    death = HP_enemy
+                }else if characterNode.name == "魔法使い" {
+                    HP_enemy -= ATK_mage
+                    death = HP_enemy
+                }else if characterNode.name == "僧侶" {
+                    HP_enemy -= ATK_priest
+                    death = HP_enemy
+                }
+                
+                enemyHPLabel?.text = "HP:\(HP_enemy)"
+                print("残りHP＝\(HP_enemy)")
+                if HP_enemy <= 0 {
                     partnerNode.removeFromParent()
                     enemyHPLabel?.text = "🎉Congratulations🎉"
                 }
@@ -495,7 +676,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             
             //キャラクターがゲートから離れた時
             if partnerNode.name == "ゲート" {
-                if characterNode.position.y < (partnerNode.position.y - sizeDefault_Caracter.height / 2 ) {
+                if characterNode.position.y < (partnerNode.position.y - sizeDefault_Caracter.height / 2) {
                     //キャラクターがゲートより下に離れた場合（ゲートを通過しなかった）
                     return
                 }else{
