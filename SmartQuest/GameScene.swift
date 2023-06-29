@@ -25,6 +25,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var statusSize = CGSize(width: 0, height: 0)    //ステータス画面のサイズ
     var stagePositionZero = CGPoint(x: 0, y: 0)     //ステージの原点座標
     
+    
     //発射地点のノード
     var launchNode: SKFieldNode!
     
@@ -35,11 +36,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var birthPosition = CGPoint(x: 0, y: 0)                 //最初のキャラが生成される座標
     
     let restitution_Wall: CGFloat = 0.3                    //壁の反発係数
-    let restitution_Caracter: CGFloat = 0.5                 //キャラクターの反発係数
-    let restitution_cue: CGFloat = 0.0                      //キューの反発係数
-    let restitution_pin: CGFloat = 0.7                      //ピンの反発係数
-    let restitution_gate: CGFloat = 0.5                     //ゲートの反発係数
-    let restitution_enemy: CGFloat = 1.5
+    let restitution_Caracter: CGFloat = 0.1                 //キャラクターの反発係数
+    let restitution_cue: CGFloat = 0.3                      //キューの反発係数
+    let restitution_pin: CGFloat = 0.9                      //ピンの反発係数
+    let restitution_gate: CGFloat = 1.0                     //ゲートの反発係数
+    let restitution_enemy: CGFloat = 1.0
+    let restitution_damage: CGFloat = 1.0
     
     let friction_cue: CGFloat = 1.0                         //キューの摩擦係数
     let friction_pin: CGFloat = 0.0                         //ピンの摩擦係数
@@ -60,7 +62,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     //共通設定
-    let gravityStrength:Float = 9.8 / 4   //重力の強さ
+    let gravityStrength:Float = 9.8 / 2   //重力の強さ
     
     
     
@@ -190,7 +192,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         top.physicsBody?.categoryBitMask = CategoryBitMask.wall
         top.physicsBody?.isDynamic = false
         top.physicsBody?.friction = 0
-        top.physicsBody?.restitution = restitution_Wall
+        top.physicsBody?.restitution = 0
         top.physicsBody?.friction = friction_wall
         top.position = CGPoint(x: stageSize.width / 2, y: stageSize.height - top.size.height / 2 - notchHeight + stagePositionZero.y)
         
@@ -277,7 +279,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         cueSize = cue.size  //キューのサイズを登録
         
         
-        
         self.addChild(wallRight)
         self.addChild(wallLeft)
         self.addChild(wallLail)
@@ -300,12 +301,85 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let pinPositions: [CGPoint] = [
             CGPoint(x: sizeDefault_Caracter.width / 2 + wallSize.width / 2, y: stageSize.height - notchHeight - topSize.height + stagePositionZero.y),
             CGPoint(x: wallSize.width * 1.1 , y: stageSize.height - notchHeight - topSize.height + sizeDefault_Caracter.height / 2 + stagePositionZero.y),
-            CGPoint(x: stageSize.width * Double.random(in: 0.25..<0.75), y: stageSize.height * Double.random(in: 0.3..<0.8) + stagePositionZero.y),
-            CGPoint(x: stageSize.width * Double.random(in: 0.25..<0.75), y: stageSize.height * Double.random(in: 0.3..<0.8) + stagePositionZero.y),
-            CGPoint(x: stageSize.width * Double.random(in: 0.25..<0.75), y: stageSize.height * Double.random(in: 0.3..<0.8) + stagePositionZero.y)
+            CGPoint(x: stageSize.width * 0.35, y: stageSize.height - topSize.height + stagePositionZero.y + stageSize.height * 0.1),
+            CGPoint(x: stageSize.width * 0.55, y: stageSize.height - topSize.height + stagePositionZero.y + stageSize.height * 0.1),
+            CGPoint(x: stageSize.width * 0.65, y: stageSize.height - topSize.height + stagePositionZero.y + stageSize.height * 0.1),
+            CGPoint(x: stageSize.width * 0.25, y: stageSize.height - topSize.height + stagePositionZero.y + stageSize.height * 0.1),
+            CGPoint(x: stageSize.width * 0.75, y: stageSize.height - topSize.height + stagePositionZero.y + stageSize.height * 0.1),
+            CGPoint(x: stageSize.width * 0.45, y: stageSize.height - topSize.height + stagePositionZero.y + stageSize.height * 0.1),
+            CGPoint(x: stageSize.width * 0.5 + sizeDefault_Caracter.width * 1.5 * 0, y: stageSize.height - topSize.height + stagePositionZero.y),
+            CGPoint(x: stageSize.width * 0.5 + sizeDefault_Caracter.width * 1.5 * 1, y: stageSize.height - topSize.height + stagePositionZero.y),
+            CGPoint(x: stageSize.width * 0.5 + sizeDefault_Caracter.width * 1.5 * 2, y: stageSize.height - topSize.height + stagePositionZero.y),
+            CGPoint(x: stageSize.width * 0.5 + sizeDefault_Caracter.width * 1.5 * 3, y: stageSize.height - topSize.height + stagePositionZero.y),
+            CGPoint(x: stageSize.width * 0.5 - sizeDefault_Caracter.width * 1.5 * 1, y: stageSize.height - topSize.height + stagePositionZero.y),
+            CGPoint(x: stageSize.width * 0.5 - sizeDefault_Caracter.width * 1.5 * 2, y: stageSize.height - topSize.height + stagePositionZero.y),
+            CGPoint(x: stageSize.width * 0.5 - sizeDefault_Caracter.width * 1.5 * 3, y: stageSize.height - topSize.height + stagePositionZero.y),
+            CGPoint(x: stageSize.width * 0.5 + sizeDefault_Caracter.width * 1.5 * 0.5, y: stageSize.height - topSize.height + stagePositionZero.y - sizeDefault_Caracter.height * 1.5),
+            CGPoint(x: stageSize.width * 0.5 + sizeDefault_Caracter.width * 1.5 * 1.5, y: stageSize.height - topSize.height + stagePositionZero.y - sizeDefault_Caracter.height * 1.5),
+            CGPoint(x: stageSize.width * 0.5 + sizeDefault_Caracter.width * 1.5 * 2.5, y: stageSize.height - topSize.height + stagePositionZero.y - sizeDefault_Caracter.height * 1.5),
+            CGPoint(x: stageSize.width * 0.5 - sizeDefault_Caracter.width * 1.5 * 0.5, y: stageSize.height - topSize.height + stagePositionZero.y - sizeDefault_Caracter.height * 1.5),
+            CGPoint(x: stageSize.width * 0.5 - sizeDefault_Caracter.width * 1.5 * 1.5, y: stageSize.height - topSize.height + stagePositionZero.y - sizeDefault_Caracter.height * 1.5),
+            CGPoint(x: stageSize.width * 0.5 - sizeDefault_Caracter.width * 1.5 * 2.5, y: stageSize.height - topSize.height + stagePositionZero.y - sizeDefault_Caracter.height * 1.5),
+            CGPoint(x: stageSize.width * 0.5 - sizeDefault_Caracter.width * 1.5 * 3.5, y: stageSize.height - topSize.height + stagePositionZero.y - sizeDefault_Caracter.height * 1.5),
+            CGPoint(x: stageSize.width * 0.5 + sizeDefault_Caracter.width / 2 * 1.2, y: stageSize.height * 0.5 + sizeDefault_Caracter.height / 2 * 0),
+            CGPoint(x: stageSize.width * 0.5 + sizeDefault_Caracter.width / 2 * 1.2, y: stageSize.height * 0.5 + sizeDefault_Caracter.height / 2 * 1),
+            CGPoint(x: stageSize.width * 0.5 + sizeDefault_Caracter.width / 2 * 1.2, y: stageSize.height * 0.5 + sizeDefault_Caracter.height / 2 * 2),
+            CGPoint(x: stageSize.width * 0.5 + sizeDefault_Caracter.width / 2 * 1.2, y: stageSize.height * 0.5 + sizeDefault_Caracter.height / 2 * 3),
+            CGPoint(x: stageSize.width * 0.5 + sizeDefault_Caracter.width / 2 * 1.2, y: stageSize.height * 0.5 + sizeDefault_Caracter.height / 2 * 4),
+            CGPoint(x: stageSize.width * 0.5 - sizeDefault_Caracter.width / 2 * 1.2, y: stageSize.height * 0.5 + sizeDefault_Caracter.height / 2 * 0),
+            CGPoint(x: stageSize.width * 0.5 - sizeDefault_Caracter.width / 2 * 1.2, y: stageSize.height * 0.5 + sizeDefault_Caracter.height / 2 * 1),
+            CGPoint(x: stageSize.width * 0.5 - sizeDefault_Caracter.width / 2 * 1.2, y: stageSize.height * 0.5 + sizeDefault_Caracter.height / 2 * 2),
+            CGPoint(x: stageSize.width * 0.5 - sizeDefault_Caracter.width / 2 * 1.2, y: stageSize.height * 0.5 + sizeDefault_Caracter.height / 2 * 3),
+            CGPoint(x: stageSize.width * 0.5 - sizeDefault_Caracter.width / 2 * 1.2, y: stageSize.height * 0.5 + sizeDefault_Caracter.height / 2 * 4),
+            CGPoint(x: stageSize.width * 0.5 - sizeDefault_Caracter.width / 2 * 1.6, y: stageSize.height * 0.5 + sizeDefault_Caracter.height / 2 * 4.5),
+            CGPoint(x: stageSize.width * 0.5 + sizeDefault_Caracter.width / 2 * 1.6, y: stageSize.height * 0.5 + sizeDefault_Caracter.height / 2 * 4.5),
+            CGPoint(x: stageSize.width * 0.5 - sizeDefault_Caracter.width / 2 * 0, y: stageSize.height * 0.5 + sizeDefault_Caracter.height / 2 * 4 + sizeDefault_Caracter.height * 1.35),
+            CGPoint(x: stageSize.width * 0.5 + sizeDefault_Caracter.width / 2 * 1.2, y: stageSize.height * 0.5 - sizeDefault_Caracter.height / 4 * 1),
+            CGPoint(x: stageSize.width * 0.5 - sizeDefault_Caracter.width / 2 * 1.2, y: stageSize.height * 0.5 - sizeDefault_Caracter.height / 4 * 1),
+            CGPoint(x: stageSize.width * 0.5 + sizeDefault_Caracter.width / 2 * 2, y: stageSize.height * 0.5 - sizeDefault_Caracter.height / 4 * 2),
+            CGPoint(x: stageSize.width * 0.5 - sizeDefault_Caracter.width / 2 * 2, y: stageSize.height * 0.5 - sizeDefault_Caracter.height / 4 * 2),
+            CGPoint(x: stageSize.width * 0.5 + sizeDefault_Caracter.width / 2 * 3, y: stageSize.height * 0.5 - sizeDefault_Caracter.height / 4 * 3),
+            CGPoint(x: stageSize.width * 0.5 - sizeDefault_Caracter.width / 2 * 3, y: stageSize.height * 0.5 - sizeDefault_Caracter.height / 4 * 3),
+            CGPoint(x: sizeDefault_Caracter.width / 2 + wallSize.width / 2, y: stageSize.height * 0.5 + stagePositionZero.y + topSize.height / 2),
+            CGPoint(x: stageSize.width / 2 - stageSize.width / 4, y: stageSize.height * 0.5 + statusSize.height),
+            CGPoint(x: stageSize.width / 2 + stageSize.width / 4, y: stageSize.height * 0.5 + statusSize.height),
+            CGPoint(x: stageSize.width / 2 - stageSize.width / 3, y: stageSize.height * 0.4 + statusSize.height),
+            CGPoint(x: stageSize.width / 2 + stageSize.width / 3.5, y: stageSize.height * 0.4 + statusSize.height),
+            CGPoint(x: stageSize.width / 2 - stageSize.width / 3, y: stageSize.height * 0.3 + statusSize.height),
+            CGPoint(x: stageSize.width / 2 - stageSize.width / 3 - sizeDefault_Caracter.width / 2, y: stageSize.height * 0.3 + statusSize.height - sizeDefault_Caracter.width / 2),
+            CGPoint(x: stageSize.width / 2 - stageSize.width / 3 - sizeDefault_Caracter.width, y: stageSize.height * 0.3 + statusSize.height - sizeDefault_Caracter.width),
+            CGPoint(x: stageSize.width / 2 + stageSize.width / 3.5, y: stageSize.height * 0.3 + statusSize.height),
+            CGPoint(x: stageSize.width / 2 + stageSize.width / 3.5 - sizeDefault_Caracter.width / 2, y: stageSize.height * 0.3 + statusSize.height + sizeDefault_Caracter.width / 2),
+            CGPoint(x: stageSize.width / 2 + stageSize.width / 3.5 - sizeDefault_Caracter.width, y: stageSize.height * 0.3 + statusSize.height + sizeDefault_Caracter.width),
+            CGPoint(x: stageSize.width - sizeDefault_Caracter.width * 2, y: stagePositionZero.y + sizeDefault_Caracter.height * 1.8),
+            CGPoint(x: stageSize.width - sizeDefault_Caracter.width * 2 - sizeDefault_Caracter.width * 1.1, y: stageSize.height * 0.5 + stagePositionZero.y + topSize.height / 2),
+            CGPoint(x: stageSize.width - sizeDefault_Caracter.width * 2 - sizeDefault_Caracter.width * 1.1, y: stageSize.height * 0.5 + stagePositionZero.y + topSize.height / 2 + sizeDefault_Caracter.height / 2 * 1),
+            CGPoint(x: stageSize.width - sizeDefault_Caracter.width * 2 - sizeDefault_Caracter.width * 1.1, y: stageSize.height * 0.5 + stagePositionZero.y + topSize.height / 2 + sizeDefault_Caracter.height / 2 * 2),
+            CGPoint(x: stageSize.width - sizeDefault_Caracter.width * 2 - sizeDefault_Caracter.width * 1.1, y: stageSize.height * 0.5 + stagePositionZero.y + topSize.height / 2 + sizeDefault_Caracter.height / 2 * 3),
+            CGPoint(x: stageSize.width - sizeDefault_Caracter.width * 2 - sizeDefault_Caracter.width * 1.1, y: stageSize.height * 0.5 + stagePositionZero.y + topSize.height / 2 + sizeDefault_Caracter.height / 2 * 4),
+            CGPoint(x: stageSize.width - sizeDefault_Caracter.width * 2 - sizeDefault_Caracter.width * 1.1, y: stageSize.height * 0.5 + stagePositionZero.y + topSize.height / 2 + sizeDefault_Caracter.height / 2 * 5),
+            CGPoint(x: stageSize.width - sizeDefault_Caracter.width * 2 - sizeDefault_Caracter.width * 1.1, y: stageSize.height * 0.5 + stagePositionZero.y + topSize.height / 2 + sizeDefault_Caracter.height / 2 * 6),
+            CGPoint(x: stageSize.width - sizeDefault_Caracter.width * 2 - sizeDefault_Caracter.width * 1.1, y: stageSize.height * 0.5 + stagePositionZero.y + topSize.height / 2 + sizeDefault_Caracter.height / 2 * 7),
+            CGPoint(x: stageSize.width - sizeDefault_Caracter.width * 2 - sizeDefault_Caracter.width * 1.1, y: stageSize.height * 0.5 + stagePositionZero.y + topSize.height / 2 + sizeDefault_Caracter.height / 2 * 8),
+            CGPoint(x: stageSize.width - sizeDefault_Caracter.width * 2 - sizeDefault_Caracter.width * 0.8, y: stageSize.height * 0.5 + stagePositionZero.y + topSize.height / 2 + sizeDefault_Caracter.height / 2 * 9),
+            CGPoint(x: stageSize.width - sizeDefault_Caracter.width * 2 - sizeDefault_Caracter.width * 1.1, y: stageSize.height * 0.5 + stagePositionZero.y + topSize.height / 2 - sizeDefault_Caracter.height / 2 * 1),
+            CGPoint(x: stageSize.width - sizeDefault_Caracter.width * 2 - sizeDefault_Caracter.width * 1.1, y: stageSize.height * 0.5 + stagePositionZero.y + topSize.height / 2 - sizeDefault_Caracter.height / 2 * 2),
+            CGPoint(x: stageSize.width - sizeDefault_Caracter.width * 2 - sizeDefault_Caracter.width * 1.1, y: stageSize.height * 0.5 + stagePositionZero.y + topSize.height / 2 - sizeDefault_Caracter.height / 2 * 3),
+            CGPoint(x: stageSize.width - sizeDefault_Caracter.width * 2 - sizeDefault_Caracter.width * 1.1, y: stageSize.height * 0.5 + stagePositionZero.y + topSize.height / 2 - sizeDefault_Caracter.height / 2 * 4),
+            CGPoint(x: stageSize.width - sizeDefault_Caracter.width * 2 - sizeDefault_Caracter.width * 1.1, y: stageSize.height * 0.5 + stagePositionZero.y + topSize.height / 2 - sizeDefault_Caracter.height / 2 * 5),
+            CGPoint(x: stageSize.width - sizeDefault_Caracter.width * 2 - sizeDefault_Caracter.width * 1.1, y: stageSize.height * 0.5 + stagePositionZero.y + topSize.height / 2 - sizeDefault_Caracter.height / 2 * 6),
+            CGPoint(x: stageSize.width - sizeDefault_Caracter.width * 2 - sizeDefault_Caracter.width * 1.1, y: stageSize.height * 0.5 + stagePositionZero.y + topSize.height / 2 - sizeDefault_Caracter.height / 2 * 7),
+            CGPoint(x: stageSize.width - sizeDefault_Caracter.width * 2 - sizeDefault_Caracter.width * 1.1, y: stageSize.height * 0.5 + stagePositionZero.y + topSize.height / 2 - sizeDefault_Caracter.height / 2 * 8),
+            CGPoint(x: stageSize.width - sizeDefault_Caracter.width * 2 - sizeDefault_Caracter.width * 1.1, y: stageSize.height * 0.5 + stagePositionZero.y + topSize.height / 2 - sizeDefault_Caracter.height / 2 * 9),
+            CGPoint(x: stageSize.width - sizeDefault_Caracter.width * 2 - sizeDefault_Caracter.width * 1.1, y: stageSize.height * 0.5 + stagePositionZero.y + topSize.height / 2 - sizeDefault_Caracter.height / 2 * 10),
+            CGPoint(x: stageSize.width - sizeDefault_Caracter.width * 2 - sizeDefault_Caracter.width * 1.1 * 1.5, y: stageSize.height * 0.5 + stagePositionZero.y + topSize.height / 2 - sizeDefault_Caracter.height / 2 * 11),
+            CGPoint(x: stageSize.width - sizeDefault_Caracter.width * 2 - sizeDefault_Caracter.width * 1.1 * 2.2, y: stageSize.height * 0.5 + stagePositionZero.y + topSize.height / 2 - sizeDefault_Caracter.height / 2 * 12),
+            CGPoint(x: stageSize.width - sizeDefault_Caracter.width * 2 - sizeDefault_Caracter.width * 1.1 * 1.5, y: stageSize.height * 0.5 + stagePositionZero.y + topSize.height / 2 - sizeDefault_Caracter.height / 2 * 14),
+            CGPoint(x: stageSize.width - sizeDefault_Caracter.width * 2 - sizeDefault_Caracter.width * 1.1 * 0, y: stageSize.height * 0.5 + stagePositionZero.y + topSize.height / 2 - sizeDefault_Caracter.height / 2 * 12),
+            CGPoint(x: stageSize.width - sizeDefault_Caracter.width * 2 - sizeDefault_Caracter.width * 1.1 * 0.5, y: stageSize.height * 0.5 + stagePositionZero.y + topSize.height / 2 - sizeDefault_Caracter.height / 2 * 12.5)
         ]
         
-        let pinCount = 5    //生成するピンの個数
+        let pinCount = pinPositions.count   //生成するピンの個数
         
         //ピンを生成
         for i in 0..<pinCount {
@@ -349,7 +423,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         warrior.physicsBody?.fieldBitMask = 0   //フィールドビットマスク＝0で発射地点に吸い寄せられなくなる
         warrior.physicsBody?.categoryBitMask = CategoryBitMask.character
         warrior.physicsBody?.contactTestBitMask = CategoryBitMask.floor
-        warrior.physicsBody?.collisionBitMask = CategoryBitMask.character | CategoryBitMask.wall | CategoryBitMask.floor | CategoryBitMask.floorBottom | CategoryBitMask.cue
+        warrior.physicsBody?.collisionBitMask = CategoryBitMask.character | CategoryBitMask.wall | CategoryBitMask.floor | CategoryBitMask.floorBottom | CategoryBitMask.cue | CategoryBitMask.damage
         warrior.position = birthPosition
         warrior.name = "戦士"
         
@@ -363,7 +437,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         knight.physicsBody?.fieldBitMask = 0
         knight.physicsBody?.categoryBitMask = CategoryBitMask.character
         knight.physicsBody?.contactTestBitMask = CategoryBitMask.floor
-        knight.physicsBody?.collisionBitMask = CategoryBitMask.character | CategoryBitMask.wall | CategoryBitMask.floor | CategoryBitMask.floorBottom | CategoryBitMask.cue
+        knight.physicsBody?.collisionBitMask = CategoryBitMask.character | CategoryBitMask.wall | CategoryBitMask.floor | CategoryBitMask.floorBottom | CategoryBitMask.cue | CategoryBitMask.damage
         knight.position = CGPoint(x: birthPosition.x + warrior.size.width, y: birthPosition.y)
         knight.name = "剣士"
         
@@ -377,7 +451,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         priest.physicsBody?.fieldBitMask = 0
         priest.physicsBody?.categoryBitMask = CategoryBitMask.character
         priest.physicsBody?.contactTestBitMask = CategoryBitMask.floor
-        priest.physicsBody?.collisionBitMask = CategoryBitMask.character | CategoryBitMask.wall | CategoryBitMask.floor | CategoryBitMask.floorBottom | CategoryBitMask.cue
+        priest.physicsBody?.collisionBitMask = CategoryBitMask.character | CategoryBitMask.wall | CategoryBitMask.floor | CategoryBitMask.floorBottom | CategoryBitMask.cue | CategoryBitMask.damage
         priest.position = CGPoint(x: birthPosition.x + warrior.size.width * 2, y: birthPosition.y)
         priest.name = "僧侶"
         
@@ -438,22 +512,22 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let damageSizes: [CGSize] = [
             CGSize(width: wallSize.width / 5, height: stageSize.height / 10),
             CGSize(width: wallSize.width / 5, height: stageSize.height / 10),
-            CGSize(width: wallSize.width, height: wallSize.width),
-            CGSize(width: wallSize.width, height: wallSize.width),
-            CGSize(width: wallSize.width, height: wallSize.width)
+            CGSize(width: wallSize.width / 2, height: wallSize.width / 2),
+            CGSize(width: wallSize.width / 2, height: wallSize.width / 2),
+            CGSize(width: wallSize.width / 2, height: wallSize.width / 2)
         ]
         
         //各ダメージ判定の座標リスト
         let damagePositions: [CGPoint] = [
-            CGPoint(x: wallSize.width / 2, y: stageSize.height  /   2 + stagePositionZero.y),
-            CGPoint(x: stageSize.width - wallSize.width - sizeDefault_Caracter.width * 1.1, y: stageSize.height / 2 + stagePositionZero.y),
-            CGPoint(x: stageSize.width * Double.random(in: 0.2..<0.6), y: stageSize.height * Double.random(in: 0.4..<0.6) + stagePositionZero.y),
-            CGPoint(x: stageSize.width * Double.random(in: 0.2..<0.6), y: stageSize.height * Double.random(in: 0.4..<0.6) + stagePositionZero.y),
-            CGPoint(x: stageSize.width * Double.random(in: 0.2..<0.6), y: stageSize.height * Double.random(in: 0.4..<0.6) + stagePositionZero.y)
+            CGPoint(x: wallSize.width / 2, y: stagePositionZero.y + statusSize.height),
+            CGPoint(x: stageSize.width - wallSize.width - sizeDefault_Caracter.width * 1.1, y: stagePositionZero.y + statusSize.height),
+            CGPoint(x: stageSize.width * 0.3, y: stageSize.height * 0.6 + stagePositionZero.y),
+            CGPoint(x: stageSize.width * 0.5, y: stageSize.height * 0.6 + stagePositionZero.y),
+            CGPoint(x: stageSize.width * 0.7, y: stageSize.height * 0.6 + stagePositionZero.y)
         ]
         
         
-        let damageCount = 5    //生成するピンの個数
+        let damageCount = damagePositions.count    //生成するピンの個数
         //ダメージ判定を生成
         for i in 0..<damageCount {
             let damage = SKSpriteNode(texture: damageTexture)
@@ -461,9 +535,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             damage.physicsBody = SKPhysicsBody(rectangleOf: damage.size)
             damage.physicsBody?.isDynamic = false
             damage.physicsBody?.categoryBitMask = CategoryBitMask.damage
-            damage.physicsBody?.collisionBitMask = 0
+            damage.physicsBody?.collisionBitMask = CategoryBitMask.character
             damage.physicsBody?.contactTestBitMask = CategoryBitMask.character
-            damage.physicsBody?.restitution = restitution_Wall  //反発係数
+            damage.physicsBody?.restitution = restitution_damage  //反発係数
             damage.physicsBody?.friction = friction_wall        //摩擦係数
             damage.name = "ダメージ" // ダメージ判定に番号を振る
             damage.position = damagePositions[i]
@@ -484,7 +558,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
         //テクスチャイメージをSKテクスチャに変換
         let statusMenuTexture = SKTexture(image: textureImage)
-        var statusMenuNode = SKSpriteNode(texture: statusMenuTexture)
+        let statusMenuNode = SKSpriteNode(texture: statusMenuTexture)
         statusMenuNode.position = CGPoint(x: statusMenuNode.size.width / 2, y: statusMenuNode.size.height / 2)
         
         //キャラクターアイコンサイズ
@@ -682,7 +756,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 }else{
                     //キャラクターがゲートを通過した場合ゲートと衝突するようにする
                     print("通過した！\(String(describing: characterNode.name))")
-                    characterNode.physicsBody?.collisionBitMask = CategoryBitMask.character | CategoryBitMask.wall | CategoryBitMask.floorBottom | CategoryBitMask.cue | CategoryBitMask.gate
+                    characterNode.physicsBody?.collisionBitMask = CategoryBitMask.character | CategoryBitMask.wall | CategoryBitMask.floorBottom | CategoryBitMask.cue | CategoryBitMask.gate | CategoryBitMask.damage
                     characterNode.physicsBody?.fieldBitMask = 0
                 }
             }
